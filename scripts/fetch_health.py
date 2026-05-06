@@ -46,7 +46,7 @@ def main() -> None:
     try:
         from garminconnect import Garmin  # type: ignore[import]
     except ImportError:
-        bail("garminconnect not installed. Run: uv tool install garminconnect")
+        bail("garminconnect not available. Run the skill via: uv run --with garminconnect python ~/.claude/garmin/fetch_health.py")
 
     client = Garmin(email=email, password=password)
     TOKEN_DIR.mkdir(parents=True, exist_ok=True)

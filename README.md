@@ -35,12 +35,7 @@ Claude analyzes everything together — not just today's numbers but trends over
 
 ## Setup
 
-**1. Install the garminconnect library:**
-```bash
-uv tool install garminconnect
-```
-
-**2. Add your credentials:**
+**1. Add your credentials:**
 ```bash
 cp .env.example .env
 # Edit .env — add your Garmin Connect email and password
@@ -61,6 +56,8 @@ cp .env ~/.claude/garmin/.env
 ```bash
 uv run --with garminconnect python ~/.claude/garmin/setup.py
 ```
+
+`uv run --with garminconnect` downloads and caches the library on first run — no separate install step needed.
 
 This saves a session token to `~/.claude/garmin/tokens/`. You won't need to re-authenticate for weeks.
 
