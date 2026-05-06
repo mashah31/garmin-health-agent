@@ -51,17 +51,13 @@ def main() -> None:
     client = Garmin(email=email, password=password)
     TOKEN_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Try stored token first, fall back to password login
+    # tokenstore= loads saved session if present, otherwise does fresh login and saves
     try:
         client.login(tokenstore=str(TOKEN_DIR))
-    except Exception:
-        try:
-            client.login()
-            client.garth.dump(str(TOKEN_DIR))
-        except Exception as e:
-            if "MFA" in str(e) or "2FA" in str(e) or "NEEDS_MFA" in str(e):
-                bail("MFA required for first login. Run: uv run --with garminconnect python ~/.claude/garmin/setup.py")
-            bail(f"Authentication failed: {e}. Run setup: uv run --with garminconnect python ~/.claude/garmin/setup.py")
+    except Exception as e:
+        if "MFA" in str(e) or "2FA" in str(e) or "NEEDS_MFA" in str(e):
+            bail("MFA required for first login. Run: uv run --with garminconnect python ~/.claude/garmin/setup.py")
+        bail(f"Authentication failed: {e}. Run setup: uv run --with garminconnect python ~/.claude/garmin/setup.py")
 
     today = date.today().isoformat()
     yesterday = (date.today() - timedelta(days=1)).isoformat()

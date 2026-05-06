@@ -48,12 +48,12 @@ def main() -> None:
     client = Garmin(email=email, password=password, prompt_mfa=prompt_mfa)
 
     try:
-        client.login()
+        # tokenstore= tells login() to save the session here after auth
+        client.login(tokenstore=str(TOKEN_DIR))
     except Exception as e:
         print(f"Login failed: {e}")
         raise SystemExit(1)
 
-    client.garth.dump(str(TOKEN_DIR))
     print(f"\nSuccess! Session token saved to {TOKEN_DIR}")
     print("You can now use /garmin in Claude Code.")
 
